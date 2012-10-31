@@ -1,0 +1,32 @@
+/* Will be compiled down to a single stylesheet with your sass files */
+@import 'datepicker.css';
+
+.scroll {
+
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: auto;
+
+}
+
+fieldset fieldset fieldset legend {
+
+    border: none;
+    font-size: 1em;
+    font-weight: 700;
+
+}
+
+.date-facet input {
+    width: 100px;
+}
+
+.result dd, .result dt {
+    float: left;
+    display:inline-block;
+    padding-right: 0.2em;
+}
+
+.listen {
+    clear: left;
+}
