@@ -1,5 +1,5 @@
-define(['namespace', 'backbone', 'views/sermon', 'bootstrapjs'], 
-    function(ns, Backbone, SermonView) {
+define(['namespace', 'backbone', 'underscore', 'views/sermon', 'bootstrapjs'],
+    function (ns, Backbone, _, SermonView) {
 
 
     var Sermons = Backbone.Collection.extend({
@@ -14,7 +14,7 @@ define(['namespace', 'backbone', 'views/sermon', 'bootstrapjs'],
 
             var sermons = [];
             
-            _.each(data.sermons, function (s) { 
+            _.each(data.sermons, function (s) {
                 //console.log(s);
                 sermons.push(s.sermon);
             });
@@ -56,7 +56,7 @@ define(['namespace', 'backbone', 'views/sermon', 'bootstrapjs'],
 
         },
 
-        // better would be search functions for each facet 
+        // better would be search functions for each facet
         // (rather than push everything through search())
         // e.g.
         searchSpeakers: function (speakers) {
@@ -65,9 +65,9 @@ define(['namespace', 'backbone', 'views/sermon', 'bootstrapjs'],
 
                 var match = false;
 
-                $.each(speakers, function (i, el) {
+                _.each(speakers, function (i, el) {
                     match = data.get('field_speaker').indexOf(el.value) !== -1;
-                })
+                });
                                              
                 return match;
 
@@ -81,9 +81,9 @@ define(['namespace', 'backbone', 'views/sermon', 'bootstrapjs'],
 
                 var match = false;
 
-                $.each(books, function (i, el) {
+                _.each(books, function (i, el) {
                     match = data.get('field_passage').indexOf(el.value.substring(4)) !== -1;
-                })
+                });
                                              
                 return match;
 
@@ -92,12 +92,38 @@ define(['namespace', 'backbone', 'views/sermon', 'bootstrapjs'],
         },
 
         searchDate: function (dateRange) {
-            //test if any of the models.field_dateandtime falls within dateRange
+
+            this.resetList(_(this.filter(function (data) {
+
+                //debugger;
+
+                var sermonDate = data.get('field_dateandtime');
+                                 
+                // test if any of the models.field_dateandtime
+                // falls within dateRange
+                console.log('checking if ' + sermonDate + ' falls within ' +
+                            dateRange.start + ' - ' + dateRange.end);
+
+                if (sermonDate < dateRange.start) {
+                    console.log('sermon was before dateRange.start');
+                    return false;
+                }
+            
+                if (sermonDate > dateRange.end) {
+                    console.log('sermon was after dateRange.end');
+                    return false;
+                }
+
+                console.log('sermon falls within dateRange');
+                return true;
+
+            })));
+
         }
-  
+
     });
 
-    ns.Sermons = new Sermons;
+    ns.Sermons = new Sermons();
 
     return ns.Sermons;
 

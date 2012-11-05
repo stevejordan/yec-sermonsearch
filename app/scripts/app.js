@@ -59,11 +59,11 @@ require(
     });
 
     //check for test data
-    if (testData) {
-        Sermons.reset(Sermons.parse(testData));
-    } else {
-        Sermons.fetch();
-    }
+    // if (testData) {
+    //     Sermons.reset(Sermons.parse(testData));
+    // } else {
+    Sermons.fetch();
+    //}
 
     var defaultSearchText = null;
 
@@ -107,11 +107,12 @@ require(
         $(e.target).val(defaultSearchText);
     })
 
-    .on('click', '[name^="facet"]', function () {
+    .on('click change', '[name^="facet"]', function () {
 
-        //find the speakers
+        //find out what has changed
         var speakersChosen = $('[name="facet[speaker]"]:checked').toArray(),
-            biblebooksChosen = $('[name^="facet[biblebook"]:checked').toArray();
+            biblebooksChosen = $('[name^="facet[biblebook"]:checked').toArray(),
+            dateRangeChosen;
 
         if (speakersChosen.length) {
             ns.Sermons.searchSpeakers(speakersChosen);
@@ -123,7 +124,15 @@ require(
             return;
         }
 
-        ns.Sermons.resetList();
+        // + converts to unix timestamp
+        dateRangeChosen = {
+            start: +new Date($('[name="facet[date-start]"]').val()) / 1000,
+            end: +new Date($('[name="facet[date-end]"]').val()) / 1000
+        };
+
+        ns.Sermons.searchDate(dateRangeChosen);
+
+        //ns.Sermons.resetList();
 
     });
 

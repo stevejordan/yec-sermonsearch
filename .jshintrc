@@ -20,6 +20,6 @@
     "trailing": true,
     "smarttabs": true,
     "predef": [
-        "$"
+        "$", "define"
     ]
 }
