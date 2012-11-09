@@ -29,6 +29,14 @@
 
         <fieldset class="span4 facets">
 
+          <fieldset class="date-facet">
+            <legend>Date Range</legend>
+
+            <input data-datepicker="datepicker" class="small" type="text" value="01/05/2011" name="facet[date-start]" />
+            to
+            <input data-datepicker="datepicker" class="small" type="text" value="05/08/2011" name="facet[date-end]" />
+          </fieldset>
+
           <fieldset>
             <legend>Speaker</legend>
             <label class="checkbox">
@@ -329,12 +337,16 @@
 
           </fieldset>
 
-          <fieldset class="date-facet">
-            <legend>Date Range</legend>
-
-            <input data-datepicker="datepicker" class="small" type="text" value="01/05/2011" name="facet[date-start]" />
-            to
-            <input data-datepicker="datepicker" class="small" type="text" value="05/08/2011" name="facet[date-end]" />
+          <fieldset>
+            <legend>Topic</legend>
+            <label class="checkbox">
+              <input type="checkbox" name="facet[speaker]" value="Topic1" />
+              Topic 1
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="facet[speaker]" value="Topic2" />
+              Topic 2
+            </label>
           </fieldset>
 
         </fieldset>
